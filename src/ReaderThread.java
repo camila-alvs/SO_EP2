@@ -4,7 +4,7 @@ public class ReaderThread implements Runnable {
 
     private String value;
 
-    public ReaderThread(String[] words, int id) {
+    public ReaderThread(int id, String[] words) {
         this.id = id;
         this.words = words;
     }

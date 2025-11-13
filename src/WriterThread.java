@@ -2,7 +2,7 @@ public class WriterThread implements Runnable {
     private final int id;
     private final String[] words;
 
-    public WriterThread(String[] words, int id) {
+    public WriterThread(int id, String[] words) {
         this.id = id;
         this.words = words;
     }

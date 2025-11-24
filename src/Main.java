@@ -22,13 +22,13 @@ public class Main {
             }
             
             if(resposta==1) {
-                Manager.setUp("src/bd.txt", readerAmount, writerAmount);
+                Manager.setUp("bd.txt", readerAmount, writerAmount);
                 Manager.runWithRoles();
                 Manager.displayTimes();
                 Manager.cleanUp();
             }
             if(resposta==2) {
-                Manager.setUp("src/bd.txt", readerAmount, writerAmount);
+                Manager.setUp("bd.txt", readerAmount, writerAmount);
                 Manager.runGeneric();
                 Manager.displayTimes();
                 Manager.cleanUp();

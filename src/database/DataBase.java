@@ -1,8 +1,8 @@
 package database;
 
 import java.io.IOException;
-import java.nio.file.Paths;
-import java.nio.file.Files;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +14,19 @@ public class DataBase {
     }
 
     public static void populateDatabase(String filePath) {
-        // Lendo o arquivo
         List<String> bdFileContents = new ArrayList<String>();
-        try {
-            bdFileContents = Files.readAllLines(Paths.get(filePath));
-        } catch (IOException error) {
+        String line;
+        try{
+            // Acessando o arquivo
+            FileReader arquivo = new FileReader(filePath);
+            BufferedReader leitor = new BufferedReader(arquivo);
+            
+            // Lendo o arquivo
+            while((line=leitor.readLine())!=null) {
+                bdFileContents.add(line);
+            }
+            leitor.close();
+        } catch(IOException error) {
             System.out.println("Erro lendo a base: " + error);
         }
 

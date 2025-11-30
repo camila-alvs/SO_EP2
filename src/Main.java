@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import manager.Manager;
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -13,28 +15,17 @@ public class Main {
             System.out.println("Quantidade de Escritores (writer):  ");
             int writerAmount = scanner.nextInt();
 
-            System.out.println("Escolha a opção que deseja executar:");
-            System.out.println("1 - Com diferenciação entre Readers e Writers (writers bloqueiam a base para outros writers).\n2 - Sem diferenciação (qualquer acesso à base a bloqueia).");
-            int resposta = scanner.nextInt();
-            if(resposta!=1 && resposta!=2) {
-                System.out.println("Opção inválida. Tente novamente.");
-                continue;
-            }
+            long tempoInicial = System.currentTimeMillis();
+            Manager.setUp("bd.txt", readerAmount, writerAmount);
+            Manager.run();
+            Manager.cleanUp();
+            long tempoFinal = System.currentTimeMillis();
             
-            if(resposta==1) {
-                Manager.setUp("bd.txt", readerAmount, writerAmount);
-                Manager.runWithRoles();
-                Manager.displayTimes();
-                Manager.cleanUp();
-            }
-            if(resposta==2) {
-                Manager.setUp("bd.txt", readerAmount, writerAmount);
-                Manager.runGeneric();
-                Manager.displayTimes();
-                Manager.cleanUp();
-            }
-
-            keepRunning = Manager.isAlive();
+            System.out.println("Tempo de execução: " + (tempoFinal - tempoInicial) + " ms\n");
+            System.out.println("Deseja executar novamente? (1 - Sim / 0 - Não)");
+            int resposta = scanner.nextInt();
+            if(resposta == 0)
+                keepRunning = false;
         }
         scanner.close();
     }

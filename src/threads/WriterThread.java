@@ -1,25 +1,26 @@
 package threads;
+
+import database.DataBase;
+import manager.Manager;
+
 public class WriterThread extends Thread {
-    private int id;
-    private final String[] words;
+    private final String word;
 
-    public WriterThread(int id, String[] words) {
-        this.id = id;
-        this.words = words;
-    }
-
-    public long getId() {
-        return this.id;
+    public WriterThread() {
+        word = "MODIFICADO";
     }
 
     public void run() {
         try {
+            if(!Manager.acquireLock(this))
+                wait(100000000);
             for (int i = 0; i < 100; i++) {
-                int position = (int) Math.random() * words.length;
-                words[position] = "MODIFICADO";
+                int position = (int) Math.random() * DataBase.database.length;
+                DataBase.database[position] = word;
             }
             Thread.sleep(1);
-        } catch (InterruptedException error) {
+            Manager.releaseLock(this);
+        } catch (Exception error) {
             System.out.println(error);
         }
     }

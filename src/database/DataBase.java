@@ -11,7 +11,6 @@ public class DataBase {
 
     static {
         database = null;
-        lock = false;
     }
 
     public static void populateDatabase(String filePath) {

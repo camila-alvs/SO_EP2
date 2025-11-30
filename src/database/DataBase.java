@@ -8,7 +8,6 @@ import java.util.List;
 
 public class DataBase {
     public static String[] database;
-    public static boolean lock; // Se true base está bloqueada, se false base está livre
 
     static {
         database = null;
@@ -29,13 +28,6 @@ public class DataBase {
         for(int i=0; i<bdFileContents.size(); i++) 
             database[i] = bdFileContents.get(i);
         return;
-    }
-
-    public static void acquireLock() {
-        lock = true;
-    }
-    public static void releaseLock() {
-        lock = false;
     }
 
     public static void cleanUp() {

@@ -15,13 +15,15 @@ public class Main {
             System.out.println("Quantidade de Escritores (writer):  ");
             int writerAmount = scanner.nextInt();
 
-            long tempoInicial = System.currentTimeMillis();
-            Manager.setUp("./database/bd.txt", readerAmount, writerAmount);
-            Manager.run();
-            Manager.cleanUp();
-            long tempoFinal = System.currentTimeMillis();
-            
-            System.out.println("Tempo de execução: " + (tempoFinal - tempoInicial) + " ms\n");
+            for(int i=1; i<=50; i++) {
+                long tempoInicial = System.currentTimeMillis();
+                Manager.setUp("./database/bd.txt", readerAmount, writerAmount);
+                Manager.run();
+                Manager.cleanUp();
+                long tempoFinal = System.currentTimeMillis();
+                
+                System.out.println("Tempo de execução (" + i + "): " + (tempoFinal - tempoInicial) + " ms\n");
+            }
             System.out.println("Deseja executar novamente? (1 - Sim / 0 - Não)");
             int resposta = scanner.nextInt();
             if(resposta == 0)

@@ -5,9 +5,13 @@ import manager.Manager;
 
 public class ReaderThread extends Thread {
     private String value;
+    public final Object wait;
+    public boolean paused;
 
     public ReaderThread() {
         value = new String();
+        wait = new Object();
+        paused = false;
     }
 
     public String getValue() {
@@ -16,14 +20,17 @@ public class ReaderThread extends Thread {
 
     public void run() {
         try {
-            if(!Manager.acquireLock(this))
-                wait(100000000);
-            for(int i=0; i<100; i++) {
-                int position = (int)(Math.random() * DataBase.database.length);
-                value = DataBase.database[position];
+            synchronized(wait) {
+                if(!Manager.acquireLock(this))
+                    while(paused)
+                        wait.wait();
+                for(int i=0; i<100; i++) {
+                    int position = (int)(Math.random() * DataBase.database.length);
+                    value = DataBase.database[position];
+                }
+                sleep(1);
+                Manager.releaseLock(this);
             }
-            sleep(1);
-            Manager.releaseLock(this);
         } catch (Exception error) {
             System.out.println(error);
         }

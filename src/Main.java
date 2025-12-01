@@ -16,7 +16,7 @@ public class Main {
             int writerAmount = scanner.nextInt();
 
             long tempoInicial = System.currentTimeMillis();
-            Manager.setUp("bd.txt", readerAmount, writerAmount);
+            Manager.setUp("./database/bd.txt", readerAmount, writerAmount);
             Manager.run();
             Manager.cleanUp();
             long tempoFinal = System.currentTimeMillis();

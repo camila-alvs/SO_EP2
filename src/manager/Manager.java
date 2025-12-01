@@ -96,7 +96,20 @@ public class Manager {
             return;
         }
         lockHolder = lockQueue.remove(0);
-        lockHolder.notify();
+        if(lockHolder instanceof ReaderThread) {
+            ReaderThread reader = (ReaderThread) lockHolder;
+            synchronized(reader.wait) {
+                reader.paused = false;
+                reader.wait.notify();
+            }
+        }
+        else {
+            WriterThread writer = (WriterThread) lockHolder;
+            synchronized(writer.wait) {
+                writer.paused = false;
+                writer.wait.notify();
+            }
+        }
     }
 
     /*
